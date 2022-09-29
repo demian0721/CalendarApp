@@ -17,4 +17,7 @@
     <string name="sat_ko">토</string>
     <string name="sun_ko">일</string>
 
+    <string name="calendar_head_button1">prev month indicator</string>
+    <string name="calendar_head_button2">next month indicator</string>
+
 </resources>

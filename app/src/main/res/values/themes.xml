@@ -12,7 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="appBarLayoutStyle">@style/AppBarStyle</item>
     </style>
+
     <style name="Theme.CalendarApp.NoTitleBar">
         <item name="windowNoTitle">true</item>
     </style>
@@ -21,5 +23,8 @@
     </style>
     <style name="Theme.CalendarApp.FullScreen.NoTitleBar">
         <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppBarStyle" parent="Widget.Design.AppBarLayout">
+        <item name="android:background">@color/purple_500</item>
     </style>
 </resources>

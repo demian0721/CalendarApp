@@ -13,88 +13,30 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-    <!--  Text Style  -->
-    <style name="TextHeadline32">
-        <item name="android:textSize">32sp</item>
-        <item name="android:textColor">@color/black</item>
+    <!--  Toolbar Title Style  -->
+    <style name="ToolbarTitle">
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="TextHeadline32.White">
+    <style name="ToolbarTitle.white">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="TextHeadline32.White.Bold">
+    <style name="ToolbarTitle.white.bold">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextHeadline5" parent="TextAppearance.MaterialComponents.Headline5">
+    <!--  Calendar Head Style  -->
+    <style name="CalendarHead">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CalendarHead.Main">
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black_1000</item>
     </style>
 
-    <style name="TextHeadline5.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextMedium" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextMedium.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextSubtitle1.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextSubtitle1.White">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TextSubtitle1.White.Bold">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TextSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextSubtitle2.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextSubtitle3">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextSubtitle3.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextCaption1" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextCaption1.White">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TextCaption2" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextCaption2.White">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TextCaption2.White.Bold">
-        <item name="android:textStyle">bold</item>
+    <style name="CalendarHead.Side">
+        <item name="android:textColor">@color/grey_700</item>
     </style>
 </resources>
