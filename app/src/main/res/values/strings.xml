@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CalendarApp</string>
+
+    <string name="mon_en">Mon</string>
+    <string name="tue_en">Tue</string>
+    <string name="wen_en">Wen</string>
+    <string name="thu_en">Thu</string>
+    <string name="fri_en">Fri</string>
+    <string name="sat_en">Sat</string>
+    <string name="sun_en">Sun</string>
+
+    <string name="mon_ko">월</string>
+    <string name="tue_ko">화</string>
+    <string name="wen_ko">수</string>
+    <string name="thu_ko">목</string>
+    <string name="fri_ko">금</string>
+    <string name="sat_ko">토</string>
+    <string name="sun_ko">일</string>
+
+</resources>
