@@ -13,4 +13,13 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.CalendarApp.NoTitleBar">
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.CalendarApp.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <style name="Theme.CalendarApp.FullScreen.NoTitleBar">
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
