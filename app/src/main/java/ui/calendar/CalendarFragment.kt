@@ -5,21 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.calendar.app.R
+import androidx.viewpager2.widget.ViewPager2
 import com.calendar.app.databinding.FragmentCalendarBinding
-import org.joda.time.DateTime
-import ui.calendar.CalendarUtils.Companion.getMonthList
 
 class CalendarFragment : Fragment() {
 
-    private var millis: Long = 0L
     private lateinit var binding: FragmentCalendarBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            millis = it.getLong(MILLIS)
-        }
+
     }
 
     override fun onCreateView(
@@ -32,18 +27,15 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.lifecycleOwner = viewLifecycleOwner
+        initView()
     }
 
-    companion object {
-
-        private const val MILLIS = "MILLIS"
-
-        fun newInstance(millis: Long) = CalendarFragment().apply {
-            arguments = Bundle().apply {
-                putLong(MILLIS, millis)
-            }
+    private fun initView() {
+        val calendarAdapter = CalendarAdapter(requireActivity())
+        binding.vpCalendar.adapter = calendarAdapter
+        binding.vpCalendar.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        calendarAdapter.apply {
+            binding.vpCalendar.setCurrentItem(this.calendarFragmentPosition, false)
         }
     }
 }
