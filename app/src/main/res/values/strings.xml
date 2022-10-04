@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CalendarApp</string>
-
+    <string name="calendar_year_month_format">yyyy년 MM월</string>
     <string name="mon_en">Mon</string>
     <string name="tue_en">Tue</string>
     <string name="wen_en">Wen</string>
@@ -19,5 +19,6 @@
 
     <string name="calendar_head_button1">prev month indicator</string>
     <string name="calendar_head_button2">next month indicator</string>
+    <string name="todo_title">TODO...</string>
 
 </resources>

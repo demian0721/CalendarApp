@@ -27,10 +27,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
-
-    private fun initView() {
         val calendarAdapter = CalendarAdapter(requireActivity())
         binding.vpCalendar.adapter = calendarAdapter
         binding.vpCalendar.orientation = ViewPager2.ORIENTATION_HORIZONTAL
