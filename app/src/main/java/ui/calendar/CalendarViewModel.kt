@@ -2,7 +2,7 @@ package ui.calendar
 
 import java.util.*
 
-class CustomCalendar(date: Date) {
+class CalendarViewModel(date: Date) {
     companion object {
         const val DAYS_OF_WEEK = 7
         const val LOW_OF_CALENDAR = 6

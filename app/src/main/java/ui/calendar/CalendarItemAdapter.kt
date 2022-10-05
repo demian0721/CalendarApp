@@ -18,12 +18,12 @@ class CalendarItemAdapter(val context: Context, val calendarLayout: LinearLayout
     private val TAG = javaClass.simpleName
     var dataList: ArrayList<Int> = arrayListOf()
 
-    /** CustomCalendar 이용하여 날짜 리스트 만들기 */
-    var customCalendar: CustomCalendar = CustomCalendar(date)
+    /** CalendarViewModel 이용하여 날짜 리스트 만들기 */
+    var calendarViewModel: CalendarViewModel = CalendarViewModel(date)
 
     init {
-        customCalendar.initBaseCalendar()
-        dataList = customCalendar.dateList
+        calendarViewModel.initBaseCalendar()
+        dataList = calendarViewModel.dateList
     }
 
     interface ItemClick {
@@ -60,8 +60,8 @@ class CalendarItemAdapter(val context: Context, val calendarLayout: LinearLayout
 
         fun bind(data: Int, position: Int, context: Context) {
 //            Log.d(TAG, "${customCalendar.prevTail}, ${customCalendar.nextHead}")
-            val firstDateIndex = customCalendar.prevTail
-            val lastDateIndex = dataList.size - customCalendar.nextHead - 1
+            val firstDateIndex = calendarViewModel.prevTail
+            val lastDateIndex = dataList.size - calendarViewModel.nextHead - 1
 //            Log.d(TAG, "$firstDateIndex, $lastDateIndex")
 
             /** 날짜 표시 */
