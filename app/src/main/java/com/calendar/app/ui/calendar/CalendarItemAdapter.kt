@@ -28,6 +28,7 @@ class CalendarItemAdapter(
     private val TAG = javaClass.simpleName
     var dataList: ArrayList<Int> = arrayListOf()
     var dataStrList: ArrayList<String> = arrayListOf()
+    var weekList: ArrayList<Int> = arrayListOf()
 
     /** CalendarViewModel 이용하여 날짜 리스트 만들기 */
     var calendarMake: CalendarMake = CalendarMake(date)
@@ -37,6 +38,7 @@ class CalendarItemAdapter(
         calendarMake.initBaseCalendar()
         dataList = calendarMake.dateList
         dataStrList = calendarMake.dateStrList
+        weekList = calendarMake.weekList
     }
 
     interface ItemClick {
@@ -76,6 +78,12 @@ class CalendarItemAdapter(
 
             /** 날짜 표시 */
             binding.itemCalendarDateText.text = data.toString()
+            if(position in firstDateIndex until lastDateIndex && weekList[position]==1) {
+                binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDay_Sun)
+            }
+            if(position in firstDateIndex until lastDateIndex && weekList[position]==7) {
+                binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDay_Sat)
+            }
 
             /** 오늘 날짜 처리 */
             val dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)

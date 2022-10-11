@@ -20,6 +20,7 @@ class CalendarMake(date: Date) {
 
     var dateList = arrayListOf<Int>()
     var dateStrList = arrayListOf<String>()
+    var weekList = arrayListOf<Int>()
 
     init {
         calendar.time = date
@@ -71,15 +72,7 @@ class CalendarMake(date: Date) {
         for (i in 1..prevTail) { // i 는 prevTail 만큼 반복함
             dateList.add(++maxOffsetDate) // 표시될 날짜 리스트에 지난달 꼬리 날짜를 추가함 반복문으로 인해 maxOffsetDate 가 1씩 증가함
             newCalendar.set(Calendar.DATE, maxOffsetDate) // new 캘린더 객체의 날짜를 세팅함
-            Log.d(
-                TAG,
-                "formattedDate2: ${
-                    SimpleDateFormat(
-                        "yyyy-MM-dd",
-                        Locale.KOREA
-                    ).format(newCalendar.time)
-                }"
-            )
+            weekList.add(newCalendar.get(Calendar.DAY_OF_WEEK))
             dateStrList.add(
                 SimpleDateFormat(
                     "yyyy-MM-dd",
@@ -97,7 +90,9 @@ class CalendarMake(date: Date) {
             newCalendar.set(Calendar.DATE, i)
             dateList.add(i)
             dateStrList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(newCalendar.time))
+            weekList.add(newCalendar.get(Calendar.DAY_OF_WEEK))
         }
+        Log.d(TAG, "currentMonthDate: ${dateList.toString()}")
 
     }
 
@@ -110,7 +105,9 @@ class CalendarMake(date: Date) {
             }
             dateList.add(date++)
             dateStrList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(calendar.time))
+            weekList.add(calendar.get(Calendar.DAY_OF_WEEK))
         }
         Log.d(TAG, "dateStrList: ${dateStrList.toString()}")
+        Log.d(TAG, "weekList: ${weekList.toString()}")
     }
 }
