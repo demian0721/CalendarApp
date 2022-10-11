@@ -58,6 +58,17 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="CalendarDate.Dimmed">
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+    <style name="CalendarDate.Selected">
+        <item name="android:textColor">@color/purple_600</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CalendarDate.Today">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/purple_500</item>
+    </style>
 
     <!--  Todo Style  -->
     <style name="TodoTitle">

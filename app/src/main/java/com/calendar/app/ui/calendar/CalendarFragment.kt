@@ -1,12 +1,16 @@
-package ui.calendar
+package com.calendar.app.ui.calendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.calendar.app.AssetLoader
 import com.calendar.app.databinding.FragmentCalendarBinding
+import com.calendar.app.repository.calendar.CalendarAssetDataSource
+import com.calendar.app.repository.calendar.CalendarRepository
 
 class CalendarFragment : Fragment() {
 

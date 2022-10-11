@@ -1,4 +1,4 @@
-package ui.calendar
+package com.calendar.app.ui.calendar
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

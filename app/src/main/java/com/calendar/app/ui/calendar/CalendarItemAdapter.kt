@@ -1,4 +1,4 @@
-package ui.calendar
+package com.calendar.app.ui.calendar
 
 import android.content.Context
 import android.graphics.Typeface
@@ -7,23 +7,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.calendar.app.R
 import com.calendar.app.databinding.ItemCalendarViewBinding
+import com.calendar.app.model.Schedule
+import com.calendar.app.repository.calendar.CalendarRepository
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarItemAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date) :
+class CalendarItemAdapter(
+    val context: Context,
+    val calendarLayout: LinearLayout,
+    val date: Date,
+    val today: Date,
+    val events: List<Schedule>?
+) :
     RecyclerView.Adapter<CalendarItemAdapter.CalendarItemViewHolder>() {
 
     private val TAG = javaClass.simpleName
     var dataList: ArrayList<Int> = arrayListOf()
+    var dataStrList: ArrayList<String> = arrayListOf()
 
     /** CalendarViewModel 이용하여 날짜 리스트 만들기 */
-    var calendarViewModel: CalendarViewModel = CalendarViewModel(date)
+    var calendarMake: CalendarMake = CalendarMake(date)
 
     init {
-        calendarViewModel.initBaseCalendar()
-        dataList = calendarViewModel.dateList
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(date)
+        calendarMake.initBaseCalendar()
+        dataList = calendarMake.dateList
+        dataStrList = calendarMake.dateStrList
     }
 
     interface ItemClick {
@@ -43,12 +56,11 @@ class CalendarItemAdapter(val context: Context, val calendarLayout: LinearLayout
         /** item_calendar_view 높이 지정 */
         val h = calendarLayout.height / 6
         holder.itemView.layoutParams.height = h
-//        Log.d(TAG, dataList.toString())
         holder.bind(dataList[position], position, context)
         if (itemClick != null) {
-            val onClickListener = holder.itemView.setOnClickListener { v ->
-                itemClick?.onClick(v, position)
-
+            val onClickListener = holder.itemView.setOnClickListener {
+                itemClick?.onClick(it, position)
+                holder.binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDate_Selected)
             }
         }
     }
@@ -59,26 +71,32 @@ class CalendarItemAdapter(val context: Context, val calendarLayout: LinearLayout
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Int, position: Int, context: Context) {
-//            Log.d(TAG, "${customCalendar.prevTail}, ${customCalendar.nextHead}")
-            val firstDateIndex = calendarViewModel.prevTail
-            val lastDateIndex = dataList.size - calendarViewModel.nextHead - 1
-//            Log.d(TAG, "$firstDateIndex, $lastDateIndex")
+            val firstDateIndex = calendarMake.prevTail
+            val lastDateIndex = dataList.size - calendarMake.nextHead - 1
 
             /** 날짜 표시 */
-            Log.e(TAG, data.toString())
             binding.itemCalendarDateText.text = data.toString()
+
             /** 오늘 날짜 처리 */
             val dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)
             val dateInt = dateString.toInt()
-            if (dataList[position] == dateInt) {
-                binding.itemCalendarDateText.setTypeface(
-                    binding.itemCalendarDateText.typeface,
-                    Typeface.BOLD
-                )
+            val today = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(today)
+            if (dataList[position] == dateInt && dataStrList[position] == today) {
+                binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDate_Today)
             }
 
+            /** 스케쥴 있는 날짜 점찍기 */
+            binding.itemCalendarEventDot.isVisible = false
+            events?.run {
+                for (i in 1 until events.size) {
+                    if (dataStrList[position] == events[i].endDate) {
+                        binding.itemCalendarEventDot.isVisible = true
+                    }
+                }
+            }
+            /** 이전달, 다음달 날짜 회색처리 */
             if (position < firstDateIndex || position > lastDateIndex) {
-                // TODO 현재 월의 1일 이전, 현재 월의 마지막일 이후 값의 텍스트를 회색처리
+                binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDate_Dimmed)
             }
         }
     }

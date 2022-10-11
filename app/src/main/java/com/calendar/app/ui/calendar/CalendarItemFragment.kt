@@ -1,4 +1,4 @@
-package ui.calendar
+package com.calendar.app.ui.calendar
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,11 +10,17 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.calendar.app.AssetLoader
 import com.calendar.app.R
 import com.calendar.app.databinding.FragmentCalendarItemBinding
-import ui.MainActivity
+import com.calendar.app.model.Schedule
+import com.calendar.app.repository.calendar.CalendarAssetDataSource
+import com.calendar.app.repository.calendar.CalendarRepository
+import com.calendar.app.ui.MainActivity
+import com.calendar.app.ui.common.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,11 +29,14 @@ class CalendarItemFragment : Fragment() {
     private val TAG = javaClass.simpleName
     lateinit var mContext: Context
 
-
     var pageIndex = 0
 
     lateinit var currentDate: Date
+    lateinit var today: Date
+    lateinit var events: List<Schedule>
+
     lateinit var binding: FragmentCalendarItemBinding
+    lateinit var assetLoader: AssetLoader
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -52,6 +61,7 @@ class CalendarItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCalendarItemBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -61,13 +71,28 @@ class CalendarItemFragment : Fragment() {
         pageIndex -= (Int.MAX_VALUE / 2)
         Log.e(TAG, "Calendar Index: $pageIndex")
 
+        assetLoader = AssetLoader(requireContext())
+        val calendarAssetDataSource = CalendarAssetDataSource(assetLoader)
+        val calendarRepository = CalendarRepository(calendarAssetDataSource)
+        Log.d("asdf", calendarRepository.getCalendarData().toString())
+
         // 날짜 구하기
         val date = Calendar.getInstance().run {
             add(Calendar.MONTH, pageIndex)
             time
         }
+        val _today = Calendar.getInstance().run {
+            time
+        }
+
         currentDate = date
         Log.e(TAG, "$date")
+
+        today = _today
+
+        events = calendarRepository.getCalendarData()!!
+
+
         // 포맷 적용
         val datetime: String = SimpleDateFormat(
             mContext.getString(R.string.calendar_year_month_format),
@@ -75,10 +100,11 @@ class CalendarItemFragment : Fragment() {
         ).format(date.time)
 
         // 날짜 어댑터
-        val calendarItemAdapter = CalendarItemAdapter(mContext, binding.calendarLayout, currentDate)
+        val calendarItemAdapter = CalendarItemAdapter(mContext, binding.calendarLayout, currentDate, today, events)
         binding.calendarYearMonthText.text = datetime
         binding.calendarView.adapter = calendarItemAdapter
-        binding.calendarView.layoutManager = GridLayoutManager(mContext, 7, GridLayoutManager.VERTICAL, false)
+        binding.calendarView.layoutManager =
+            GridLayoutManager(mContext, 7, GridLayoutManager.VERTICAL, false)
         binding.calendarView.setHasFixedSize(true)
     }
 }

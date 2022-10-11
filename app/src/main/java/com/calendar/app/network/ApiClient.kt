@@ -1,4 +1,4 @@
-package network
+package com.calendar.app.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

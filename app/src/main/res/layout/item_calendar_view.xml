@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="schedule"
+            type="com.calendar.app.model.Schedule" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,14 +15,24 @@
 
         <TextView
             android:id="@+id/item_calendar_date_text"
+            style="@style/CalendarDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="1"
             android:gravity="center_horizontal|top"
-            style="@style/CalendarDate"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+
+        <View
+            android:id="@+id/item_calendar_event_dot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/ic_dot"
+            app:layout_constraintTop_toBottomOf="@id/item_calendar_date_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
