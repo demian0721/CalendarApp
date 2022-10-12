@@ -58,17 +58,7 @@ class CalendarMake(date: Date) {
         var maxOffsetDate = maxDate - prevTail // 현재달을 기준으로 달력에 보이지 않는 이전달 날짜가 몇일까지인지 구함
         Log.d(TAG, "maxOffsetDate: ${maxOffsetDate.toString()}")
         val newCalendar = calendar.clone() as Calendar // 년월일을 모두 표시할 새로운 캘린더 객체를 클론함 (이전달 객체에서 클론됨)
-        Log.d(
-            TAG,
-            "formattedDate1: ${
-                SimpleDateFormat(
-                    "yyyy-MM-dd",
-                    Locale.KOREA
-                ).format(newCalendar.time)
-            }"
-        ) // yyyy-MM-dd 형태로 포멧팅된 new 캘린더 객체 (1일)
-//        newCalendar.add(Calendar.DATE, maxOffsetDate)
-//        Log.d(TAG, "formattedDate2: ${SimpleDateFormat("yyyy-MM-dd",Locale.KOREA).format(newCalendar.time)}")
+//        yyyy-MM-dd 형태로 포멧팅된 new 캘린더 객체 (1일)
         for (i in 1..prevTail) { // i 는 prevTail 만큼 반복함
             dateList.add(++maxOffsetDate) // 표시될 날짜 리스트에 지난달 꼬리 날짜를 추가함 반복문으로 인해 maxOffsetDate 가 1씩 증가함
             newCalendar.set(Calendar.DATE, maxOffsetDate) // new 캘린더 객체의 날짜를 세팅함
@@ -80,8 +70,6 @@ class CalendarMake(date: Date) {
                 ).format(newCalendar.time)
             ) // 년월일 리스트에 꼬리날짜들을 추가함
         }
-//        for (i in 1 .. prevTail) dateStrList.add()
-// 2022-09-25 ... 2022-09-30
     }
 
     private fun makeCurrentMonth(calendar: Calendar) {
@@ -92,7 +80,7 @@ class CalendarMake(date: Date) {
             dateStrList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(newCalendar.time))
             weekList.add(newCalendar.get(Calendar.DAY_OF_WEEK))
         }
-        Log.d(TAG, "currentMonthDate: ${dateList.toString()}")
+//        Log.d(TAG, "currentMonthDate: ${dateList.toString()}")
 
     }
 
@@ -107,7 +95,7 @@ class CalendarMake(date: Date) {
             dateStrList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(calendar.time))
             weekList.add(calendar.get(Calendar.DAY_OF_WEEK))
         }
-        Log.d(TAG, "dateStrList: ${dateStrList.toString()}")
-        Log.d(TAG, "weekList: ${weekList.toString()}")
+//        Log.d(TAG, "dateStrList: ${dateStrList.toString()}")
+//        Log.d(TAG, "weekList: ${weekList.toString()}")
     }
 }
