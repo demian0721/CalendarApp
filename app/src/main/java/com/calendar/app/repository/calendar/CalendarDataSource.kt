@@ -4,5 +4,5 @@ import com.calendar.app.model.Schedule
 import com.calendar.app.model.ScheduleList
 
 interface CalendarDataSource {
-    fun getCalendarData() : List<Schedule>?
+    suspend fun getCalendarData(startDate:String) : List<Schedule>
 }

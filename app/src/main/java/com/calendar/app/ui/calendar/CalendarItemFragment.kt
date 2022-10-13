@@ -7,20 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.calendar.app.AssetLoader
 import com.calendar.app.R
 import com.calendar.app.databinding.FragmentCalendarItemBinding
 import com.calendar.app.model.Schedule
+import com.calendar.app.network.ApiClient
 import com.calendar.app.repository.calendar.CalendarAssetDataSource
 import com.calendar.app.repository.calendar.CalendarRepository
 import com.calendar.app.ui.MainActivity
-import com.calendar.app.ui.common.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,10 +29,9 @@ class CalendarItemFragment : Fragment() {
 
     lateinit var currentDate: Date
     lateinit var today: Date
-    lateinit var events: List<Schedule>
 
     lateinit var binding: FragmentCalendarItemBinding
-    lateinit var assetLoader: AssetLoader
+    val apiClient = ApiClient.create()
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -71,10 +66,9 @@ class CalendarItemFragment : Fragment() {
         pageIndex -= (Int.MAX_VALUE / 2)
         Log.e(TAG, "Calendar Index: $pageIndex")
 
-        assetLoader = AssetLoader(requireContext())
-        val calendarAssetDataSource = CalendarAssetDataSource(assetLoader)
+        val calendarAssetDataSource = CalendarAssetDataSource(apiClient)
         val calendarRepository = CalendarRepository(calendarAssetDataSource)
-        Log.d("asdf", calendarRepository.getCalendarData().toString())
+        val calendarViewModel = CalendarViewModel(calendarRepository, this)
 
         // 날짜 구하기
         val date = Calendar.getInstance().run {
@@ -90,9 +84,6 @@ class CalendarItemFragment : Fragment() {
 
         today = _today
 
-        events = calendarRepository.getCalendarData()!!
-
-
         // 포맷 적용
         val datetime: String = SimpleDateFormat(
             mContext.getString(R.string.calendar_year_month_format),
@@ -100,11 +91,24 @@ class CalendarItemFragment : Fragment() {
         ).format(date.time)
 
         // 날짜 어댑터
-        val calendarItemAdapter = CalendarItemAdapter(mContext, binding.calendarLayout, currentDate, today, events)
+        val calendarItemAdapter = CalendarItemAdapter(
+            mContext,
+            binding.calendarLayout,
+            currentDate,
+            today,
+            calendarViewModel,
+            this
+        )
         binding.calendarYearMonthText.text = datetime
         binding.calendarView.adapter = calendarItemAdapter
         binding.calendarView.layoutManager =
             GridLayoutManager(mContext, 7, GridLayoutManager.VERTICAL, false)
         binding.calendarView.setHasFixedSize(true)
+    }
+
+    fun updateData() {
+        activity?.runOnUiThread {
+            binding.calendarView.adapter?.notifyDataSetChanged()
+        }
     }
 }

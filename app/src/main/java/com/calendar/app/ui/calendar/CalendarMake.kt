@@ -2,9 +2,10 @@ package com.calendar.app.ui.calendar
 
 import android.icu.text.SimpleDateFormat
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import java.util.*
 
-class CalendarMake(date: Date) {
+class CalendarMake(date: Date):ViewModel() {
     val TAG = "CalendarMake"
 
     companion object {

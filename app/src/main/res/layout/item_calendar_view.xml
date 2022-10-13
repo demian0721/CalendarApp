@@ -7,6 +7,9 @@
         <variable
             name="schedule"
             type="com.calendar.app.model.Schedule" />
+        <variable
+            name="viewModel"
+            type="com.calendar.app.ui.calendar.CalendarViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

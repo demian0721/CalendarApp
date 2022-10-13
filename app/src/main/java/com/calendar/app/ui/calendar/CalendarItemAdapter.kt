@@ -1,14 +1,22 @@
 package com.calendar.app.ui.calendar
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.app.R
 import com.calendar.app.databinding.ItemCalendarViewBinding
 import com.calendar.app.model.Schedule
+import com.calendar.app.repository.calendar.CalendarAssetDataSource
+import com.calendar.app.repository.calendar.CalendarRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,25 +25,33 @@ class CalendarItemAdapter(
     private val calendarLayout: LinearLayout,
     date: Date,
     today: Date,
-    val events: List<Schedule>?
+    val calendarViewModel: CalendarViewModel,
+    val fragment: CalendarItemFragment
 ) :
     RecyclerView.Adapter<CalendarItemAdapter.CalendarItemViewHolder>() {
 
     /** CalendarViewModel 이용하여 날짜 리스트 만들기 */
     var calendarMake: CalendarMake = CalendarMake(date)
 
-//    private val TAG = javaClass.simpleName
+    //    private val TAG = javaClass.simpleName
     var dataList: ArrayList<Int> = arrayListOf()
     var dataStrList: ArrayList<String> = arrayListOf()
     var weekList: ArrayList<Int> = arrayListOf()
     private var selectedDate: String = ""
     private val today: String = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(today)
+    private val month: String = SimpleDateFormat("yyyy-MM", Locale.KOREA).format(today)
+    private var schedules: List<Schedule>? = null
 
     init {
         calendarMake.initBaseCalendar()
         dataList = calendarMake.dateList
         dataStrList = calendarMake.dateStrList
         weekList = calendarMake.weekList
+        CoroutineScope(Dispatchers.IO).launch {
+            schedules = calendarViewModel.loadCalendarData()
+            Log.d("asdf", "${schedules.toString()}")
+            fragment.updateData()
+        }
     }
 
     private var previousHolder: CalendarItemViewHolder? = null
@@ -113,9 +129,9 @@ class CalendarItemAdapter(
 
             /** 스케쥴 있는 날짜 점찍기 */
             binding.itemCalendarEventDot.isVisible = false
-            events?.run {
-                for (i in 1 until events.size) {
-                    if (dataStrList[position] == events[i].endDate) {
+            schedules?.run {
+                for (i in 1 until this.size) {
+                    if (dataStrList[position] == this[i].endDate) {
                         binding.itemCalendarEventDot.isVisible = true
                     }
                 }
