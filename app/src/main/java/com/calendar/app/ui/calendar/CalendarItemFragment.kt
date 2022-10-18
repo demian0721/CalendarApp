@@ -68,7 +68,7 @@ class CalendarItemFragment : Fragment() {
 
         val calendarAssetDataSource = CalendarAssetDataSource(apiClient)
         val calendarRepository = CalendarRepository(calendarAssetDataSource)
-        val calendarViewModel = CalendarViewModel(calendarRepository, this)
+        val calendarViewModel = CalendarViewModel(calendarRepository)
 
         // 날짜 구하기
         val date = Calendar.getInstance().run {

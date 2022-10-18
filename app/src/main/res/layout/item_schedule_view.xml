@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.calendar.app.ui.calendar.CalendarViewModel" />
+        <variable
+            name="schedule"
+            type="com.calendar.app.model.Schedule" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{schedule.endDate}"
+            app:layout_constraintBottom_toBottomOf="@id/title_end_date"
+            app:layout_constraintStart_toEndOf="@id/title_end_date"
+            tools:text="2022-01-01" />
+
+        <TextView
+            android:id="@+id/title_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subject"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_end_date" />
+
+        <TextView
+            android:id="@+id/tv_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{schedule.subject}"
+            app:layout_constraintBottom_toBottomOf="@+id/title_subject"
+            app:layout_constraintStart_toEndOf="@id/title_subject"
+            tools:text="2022 대구세계합창축제" />
+
+        <TextView
+            android:id="@+id/title_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_subject" />
+
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{schedule.place}"
+            app:layout_constraintBottom_toBottomOf="@+id/title_place"
+            app:layout_constraintStart_toEndOf="@+id/title_place"
+            tools:text="계명아트센터" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

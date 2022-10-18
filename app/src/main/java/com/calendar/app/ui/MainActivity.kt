@@ -10,9 +10,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val string = "2022-10-12"
-        val subString = string.substring(8)
-        println(subString)
     }
 }

@@ -19,6 +19,9 @@
 
     <string name="calendar_head_button1">prev month indicator</string>
     <string name="calendar_head_button2">next month indicator</string>
-    <string name="todo_title">TODO...</string>
+    <string name="schedule_title">공연 정보</string>
+    <string name="end_date">종료일:</string>
+    <string name="subject">공연명:</string>
+    <string name="place">공연장:</string>
 
 </resources>

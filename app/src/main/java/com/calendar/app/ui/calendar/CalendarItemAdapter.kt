@@ -20,6 +20,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+
 class CalendarItemAdapter(
     private val context: Context,
     private val calendarLayout: LinearLayout,
@@ -33,7 +35,7 @@ class CalendarItemAdapter(
     /** CalendarViewModel 이용하여 날짜 리스트 만들기 */
     var calendarMake: CalendarMake = CalendarMake(date)
 
-    //    private val TAG = javaClass.simpleName
+    private val TAG = javaClass.simpleName
     var dataList: ArrayList<Int> = arrayListOf()
     var dataStrList: ArrayList<String> = arrayListOf()
     var weekList: ArrayList<Int> = arrayListOf()
@@ -41,6 +43,7 @@ class CalendarItemAdapter(
     private val today: String = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(today)
     private val month: String = SimpleDateFormat("yyyy-MM", Locale.KOREA).format(today)
     private var schedules: List<Schedule>? = null
+    var scheduleList = arrayListOf<Schedule>()
 
     init {
         calendarMake.initBaseCalendar()
@@ -48,10 +51,11 @@ class CalendarItemAdapter(
         dataStrList = calendarMake.dateStrList
         weekList = calendarMake.weekList
         CoroutineScope(Dispatchers.IO).launch {
-            schedules = calendarViewModel.loadCalendarData()
+            schedules = calendarViewModel.loadCalendarData(fragment)
             Log.d("asdf", "${schedules.toString()}")
             fragment.updateData()
         }
+        Log.d(TAG, "dataStrList: ${dataStrList.toString()}")
     }
 
     private var previousHolder: CalendarItemViewHolder? = null
@@ -89,7 +93,17 @@ class CalendarItemAdapter(
 //        Log.d(TAG, "currentPosition:${position.toString()}-${dataStrList[position]}")
         if (dataStrList[position] == selectedDate) {
             holder.binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDate_Selected)
+            scheduleList.clear()
         }
+        schedules?.run {
+            for (i in 0 until this.size) {
+                if (dataStrList[position] == this[i].startDate) {
+                    scheduleList.add(this[i])
+                }
+            }
+            Log.d(TAG, "selectedSchedule: ${scheduleList.toString()}")
+        }
+        calendarViewModel.getScheduleList(scheduleList)
 
     }
 
@@ -130,8 +144,8 @@ class CalendarItemAdapter(
             /** 스케쥴 있는 날짜 점찍기 */
             binding.itemCalendarEventDot.isVisible = false
             schedules?.run {
-                for (i in 1 until this.size) {
-                    if (dataStrList[position] == this[i].endDate) {
+                for (i in 0 until this.size) {
+                    if (dataStrList[position] == this[i].startDate) {
                         binding.itemCalendarEventDot.isVisible = true
                     }
                 }
@@ -140,6 +154,14 @@ class CalendarItemAdapter(
             /** 오늘 날짜 처리*/
             if (dataStrList[position] == today) {
                 binding.itemCalendarDateText.setTextAppearance(R.style.CalendarDate_Today)
+                schedules?.run {
+                    for (i in 0 until this.size) {
+                        if (dataStrList[position] == this[i].startDate) {
+                            scheduleList.add(this[i])
+                        }
+                    }
+                    Log.d(TAG, "todaySchedule: ${scheduleList.toString()}")
+                }
             }
 
             /** 이전달, 다음달 날짜 회색처리 */

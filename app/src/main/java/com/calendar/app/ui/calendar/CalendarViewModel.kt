@@ -12,15 +12,16 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarViewModel(val calendarRepository: CalendarRepository, val calendarItemFragment: CalendarItemFragment) : ViewModel() {
+class CalendarViewModel(val calendarRepository: CalendarRepository) : ViewModel() {
 
-    private val _schedules = MutableLiveData<List<Schedule>>()
-    val schedules: LiveData<List<Schedule>> = _schedules
-    val apiClient = ApiClient
+    private val _schedules = MutableLiveData<ArrayList<Schedule>>()
+    val schedules: LiveData<ArrayList<Schedule>> = _schedules
 
-    //    val calendarAssetDataSource = CalendarAssetDataSource(apiClient.create())
+    fun getScheduleList(scheduleList: ArrayList<Schedule>) {
+        _schedules.value = scheduleList
+    }
 
-    suspend fun loadCalendarData(): List<Schedule> {
+    suspend fun loadCalendarData(calendarItemFragment: CalendarItemFragment): List<Schedule> {
         val startDate = SimpleDateFormat("yyyy-MM", Locale.KOREA).format(calendarItemFragment.currentDate)
         return calendarRepository.getCalendarData(startDate)
     }

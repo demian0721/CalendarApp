@@ -9,4 +9,5 @@ data class Schedule(
     val subject: String,
     val place: String,
     @SerializedName("event_gubun_name") val eventText: String,
+    @SerializedName("start_date") val startDate: String,
 )

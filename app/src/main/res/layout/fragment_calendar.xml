@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.calendar.CalendarFragment">
 
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_calendar"
             android:layout_width="0dp"
@@ -46,16 +45,27 @@
             app:layout_constraintTop_toBottomOf="@+id/vp_calendar" />
 
         <TextView
-            android:id="@+id/tv_todo"
+            android:id="@+id/title_schedule"
             style="@style/TodoTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:text="@string/todo_title"
+            android:text="@string/schedule_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/div" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/schedule_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_schedule"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/item_schedule_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
