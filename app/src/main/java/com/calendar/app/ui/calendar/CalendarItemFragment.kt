@@ -9,10 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.calendar.app.AssetLoader
 import com.calendar.app.R
 import com.calendar.app.databinding.FragmentCalendarItemBinding
-import com.calendar.app.model.Schedule
 import com.calendar.app.network.ApiClient
 import com.calendar.app.repository.calendar.CalendarAssetDataSource
 import com.calendar.app.repository.calendar.CalendarRepository
@@ -20,7 +18,7 @@ import com.calendar.app.ui.MainActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarItemFragment : Fragment() {
+class CalendarItemFragment(val viewModel: CalendarViewModel) : Fragment() {
 
     private val TAG = javaClass.simpleName
     lateinit var mContext: Context
@@ -68,7 +66,7 @@ class CalendarItemFragment : Fragment() {
 
         val calendarAssetDataSource = CalendarAssetDataSource(apiClient)
         val calendarRepository = CalendarRepository(calendarAssetDataSource)
-        val calendarViewModel = CalendarViewModel(calendarRepository)
+        val calendarViewModel:CalendarViewModel = viewModel
 
         // 날짜 구하기
         val date = Calendar.getInstance().run {

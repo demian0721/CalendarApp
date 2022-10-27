@@ -21,7 +21,8 @@ class CalendarFragment : Fragment() {
     private lateinit var binding: FragmentCalendarBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
@@ -31,19 +32,22 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val calendarAdapter = CalendarAdapter(requireActivity())
-        val scheduleItemAdapter = ScheduleItemAdapter(viewModel)
-        val lm = LinearLayoutManager(requireContext())
-
+        val calendarAdapter = CalendarAdapter(requireActivity(), viewModel)
         binding.vpCalendar.adapter = calendarAdapter
         binding.vpCalendar.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.scheduleView.adapter = scheduleItemAdapter
-        binding.scheduleView.layoutManager = lm
         calendarAdapter.apply {
             binding.vpCalendar.setCurrentItem(this.calendarFragmentPosition, false)
         }
+
+
+        Log.d("asdf", "onViewCreated: before viewmodel observe")
+        val scheduleItemAdapter = ScheduleItemAdapter(viewModel)
+
         viewModel.schedules.observe(viewLifecycleOwner) {
+            Log.d("asdf", "observe:${it.toString()}")
             scheduleItemAdapter.submitList(it)
+            binding.scheduleView.adapter?.notifyDataSetChanged()
         }
+        binding.scheduleView.adapter = scheduleItemAdapter
     }
 }

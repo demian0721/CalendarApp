@@ -6,16 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.app.R
 import com.calendar.app.databinding.ItemCalendarViewBinding
 import com.calendar.app.model.Schedule
-import com.calendar.app.repository.calendar.CalendarAssetDataSource
-import com.calendar.app.repository.calendar.CalendarRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,7 +37,6 @@ class CalendarItemAdapter(
     var weekList: ArrayList<Int> = arrayListOf()
     private var selectedDate: String = ""
     private val today: String = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(today)
-    private val month: String = SimpleDateFormat("yyyy-MM", Locale.KOREA).format(today)
     private var schedules: List<Schedule>? = null
     var scheduleList = arrayListOf<Schedule>()
 
@@ -52,7 +47,6 @@ class CalendarItemAdapter(
         weekList = calendarMake.weekList
         CoroutineScope(Dispatchers.IO).launch {
             schedules = calendarViewModel.loadCalendarData(fragment)
-            Log.d("asdf", "${schedules.toString()}")
             fragment.updateData()
         }
         Log.d(TAG, "dataStrList: ${dataStrList.toString()}")
@@ -102,8 +96,8 @@ class CalendarItemAdapter(
                 }
             }
             Log.d(TAG, "selectedSchedule: ${scheduleList.toString()}")
+            calendarViewModel.setScheduleList(scheduleList)
         }
-        calendarViewModel.getScheduleList(scheduleList)
 
     }
 
